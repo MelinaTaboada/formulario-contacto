@@ -26,7 +26,7 @@ export const FormularioContacto = () => {
     setInputForm({ ...inputs, [event.target.name]: event.target.value });
   };
 
-  const handleChange = (event) => {
+  const handleChangePaises = (event) => {
     const name = event.target.name;
     const checked = event.target.checked;
 
@@ -35,22 +35,6 @@ export const FormularioContacto = () => {
       paises: { ...prevState.paises, [name]: checked },
       provincias: checked && name === "Argentina",
     }));
-  };
-
-  const paisSeleccionado = [];
-
-  for (const pais in inputs.paises) {
-    if (inputs.paises[pais]) {
-      paisSeleccionado.push(pais);
-    }
-  }
-
-  const handleSelectChange = (event) => {
-    setInputForm({ ...inputs, estadoCivil: event.target.value });
-  };
-
-  const handleProvinciaChange = (event) => {
-    setInputForm({ ...inputs, provincias: event.target.value });
   };
 
   const onSubmit = (event) => {
@@ -67,7 +51,7 @@ export const FormularioContacto = () => {
         "\n Género: " +
         inputs.inputGenero +
         "\n Pais de origen: " +
-        paisSeleccionado +
+        Object.keys(input.paises).find(pais => input.paises[pais] == true) +
         "\n Provincia: " +
         inputs.provincias +
         "\n Estado civil: " +
@@ -129,49 +113,49 @@ export const FormularioContacto = () => {
             type="checkbox"
             name="Argentina"
             checked={inputs.paises.Argentina}
-            onChange={handleChange}
+            onChange={handleChangePaises}
           />
           Argentina
           <input
             type="checkbox"
             name="Brasil"
             checked={inputs.paises.Brasil}
-            onChange={handleChange}
+            onChange={handleChangePaises}
           />
           Brasil
           <input
             type="checkbox"
             name="Chile"
             checked={inputs.paises.Chile}
-            onChange={handleChange}
+            onChange={handleChangePaises}
           />
           Chile
           <input
             type="checkbox"
             name="Paraguay"
             checked={inputs.paises.Paraguay}
-            onChange={handleChange}
+            onChange={handleChangePaises}
           />
           Paraguay
           <input
             type="checkbox"
             name="Uruguay"
             checked={inputs.paises.Uruguay}
-            onChange={handleChange}
+            onChange={handleChangePaises}
           />
           Uruguay
           <input
             type="checkbox"
             name="Bolivia"
             checked={inputs.paises.Bolivia}
-            onChange={handleChange}
+            onChange={handleChangePaises}
           />
           Bolivia
         </div>
         {inputs.provincias && (
           <div>
             <label>Selecciona tu provincia:</label>
-            <select value={inputs.provincias} onChange={handleProvinciaChange}>
+            <select value={inputs.provincias} onChange={onInputChange}>
             <option value="Buenos Aires">Buenos Aires</option>
             <option value="Jujuy">Jujuy</option>
             <option value="Cordoba">Cordoba</option>
@@ -184,7 +168,7 @@ export const FormularioContacto = () => {
         )}
 
         <label>Estado Civil:</label>
-        <select value={inputs.estadoCivil} onChange={handleSelectChange}>
+        <select value={inputs.estadoCivil} onChange={onInputChange}>
           <option value="">Selecciona...</option>
           <option name="Soltera/o">Soltera/o</option>
           <option name="Casada/o">Casada/o</option>
