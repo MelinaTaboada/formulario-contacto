@@ -22,6 +22,8 @@ export const FormularioContacto = () => {
     provincias: false,
   });
 
+  const showProvincias = inputs.paises.Argentina === true
+
   const onInputChange = (event) => {
     setInputForm({ ...inputs, [event.target.name]: event.target.value });
   };
@@ -32,8 +34,7 @@ export const FormularioContacto = () => {
 
     setInputForm((prevState) => ({
       ...prevState,
-      paises: { ...prevState.paises, [name]: checked },
-      provincias: checked && name === "Argentina",
+      paises: { ...prevState.paises, [name]: checked }
     }));
   };
 
@@ -51,7 +52,7 @@ export const FormularioContacto = () => {
         "\n Género: " +
         inputs.inputGenero +
         "\n Pais de origen: " +
-        Object.keys(input.paises).find(pais => input.paises[pais] == true) +
+        Object.keys(inputs.paises).find(pais => inputs.paises[pais] == true) +
         "\n Provincia: " +
         inputs.provincias +
         "\n Estado civil: " +
@@ -152,10 +153,10 @@ export const FormularioContacto = () => {
           />
           Bolivia
         </div>
-        {inputs.provincias && (
+        {showProvincias && (
           <div>
             <label>Selecciona tu provincia:</label>
-            <select value={inputs.provincias} onChange={onInputChange}>
+            <select name="provincias" value={inputs.provincias} onChange={onInputChange}>
             <option value="Buenos Aires">Buenos Aires</option>
             <option value="Jujuy">Jujuy</option>
             <option value="Cordoba">Cordoba</option>
@@ -168,7 +169,7 @@ export const FormularioContacto = () => {
         )}
 
         <label>Estado Civil:</label>
-        <select value={inputs.estadoCivil} onChange={onInputChange}>
+        <select name="estadoCivil"value={inputs.estadoCivil} onChange={onInputChange}>
           <option value="">Selecciona...</option>
           <option name="Soltera/o">Soltera/o</option>
           <option name="Casada/o">Casada/o</option>
